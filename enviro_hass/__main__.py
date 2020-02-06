@@ -156,7 +156,7 @@ def display_everything():
     draw.rectangle((0, 0, WIDTH, HEIGHT), (0, 0, 0))
     column_count = 2
     row_count = (len(variables)/column_count)
-    for i in xrange(len(variables)):
+    for i in range(len(variables)):
         variable = variables[i]
         data_value = values[variable][-1]
         unit = units[i]
@@ -165,7 +165,7 @@ def display_everything():
         message = "{}: {:.1f} {}".format(variable[:4], data_value, unit)
         lim = limits[i]
         rgb = palette[0]
-        for j in xrange(len(lim)):
+        for j in range(len(lim)):
             if data_value > lim[j]:
                 rgb = palette[j+1]
         draw.text((x, y), message, font=smallfont, fill=rgb)
