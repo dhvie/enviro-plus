@@ -260,7 +260,7 @@ try:
         try:
             pms_data = pms5003.read()
         except pmsReadTimeoutError:
-            logging.warn("Failed to read PMS5003")
+            logging.warning("Failed to read PMS5003")
         else:
             pms1 = float(pms_data.pm_ug_per_m3(1.0))
             pms25 = float(pms_data.pm_ug_per_m3(2.5))
