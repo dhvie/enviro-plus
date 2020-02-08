@@ -64,7 +64,6 @@ class EnviroMqtt:
             finally:
                 self.__started = False
 
-
     def __loop(self):
         while True:
             mqtt_res = dict()
