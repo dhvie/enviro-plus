@@ -266,9 +266,13 @@ class EnviroPlus:
             "light": self.lux
         })
 
+    def __run_loop(self, func, *args, **kwargs):
+        while True:
+            func(*args, **kwargs)
+
     def start(self):
         if self.__update_proc is None:
-            self.__update_proc = Process(target=self.display_all)
+            self.__update_proc = Process(target=self.__run_loop, args=(self.display_all,))
             self.__update_proc.start()
         return self.__update_proc
 
