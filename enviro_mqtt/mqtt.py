@@ -1,6 +1,7 @@
 import json
 import paho.mqtt.client as mqtt
 import time
+from functools import partial
 from multiprocessing import Process
 from .enviro import EnviroPlus
 
@@ -9,15 +10,22 @@ from .enviro import EnviroPlus
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
+def on_connect(enviro_mqtt, client, userdata, rc):
+    print("Connected with result code "+str(rc))
+    enviro_mqtt.__connected = True
+    if rc == 0:
+        time.sleep(1)
+        enviro_mqtt.__run_loop = Process(target=enviro_mqtt.__loop)
+        enviro_mqtt.__run_loop.start()
 
 class EnviroMqtt:
 
     def __init__(self, enviro: EnviroPlus, broker_address, broker_port, topic, username=None, pw=None):
         self.__enviro = enviro
         self.__client = mqtt.Client()
-        self.__client.on_connect = lambda client, userdata, rc: self.__on_connect(client, userdata, rc)
+        self.__client.on_connect = partial(on_connect, self)
         self.__client.on_message = on_message
-        self.__client.on_disconnect = lambda client, userdata, msg: self.__on_disconnect(client, userdata, msg)
+        # self.__client.on_disconnect = lambda client, userdata, msg: self.__on_disconnect(client, userdata, msg)
         self.__connected = False
         self.__started = False
         self.__topic = topic
