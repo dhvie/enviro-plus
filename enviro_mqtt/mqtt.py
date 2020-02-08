@@ -10,20 +10,15 @@ from .enviro import EnviroPlus
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
-def on_connect(enviro_mqtt, client, userdata, rc):
+def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
-    enviro_mqtt.__connected = True
-    if rc == 0:
-        time.sleep(1)
-        enviro_mqtt.__run_loop = Process(target=enviro_mqtt.__loop)
-        enviro_mqtt.__run_loop.start()
 
 class EnviroMqtt:
 
     def __init__(self, enviro: EnviroPlus, broker_address, broker_port, topic, username=None, pw=None):
         self.__enviro = enviro
         self.__client = mqtt.Client()
-        self.__client.on_connect = partial(on_connect, self)
+        self.__client.on_connect = on_connect
         self.__client.on_message = on_message
         # self.__client.on_disconnect = lambda client, userdata, msg: self.__on_disconnect(client, userdata, msg)
         self.__connected = False
@@ -46,6 +41,7 @@ class EnviroMqtt:
             self.__started = True
             self.__client.connect(self.__broker, self.__port, 60)
             self.__client.loop_start()
+            self.__loop()
 
     def __on_connect(self, client, userdata, rc):
         print("Connected with result code "+str(rc))
