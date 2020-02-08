@@ -15,9 +15,9 @@ class EnviroMqtt:
     def __init__(self, enviro: EnviroPlus, broker_address, broker_port, topic, username=None, pw=None):
         self.__enviro = enviro
         self.__client = mqtt.Client()
-        self.__client.on_connect = self.__on_connect
+        self.__client.on_connect = lambda client, userdata, rc: self.__on_connect(client, userdata, rc)
         self.__client.on_message = on_message
-        self.__client.on_disconnect = self.__on_disconnect
+        self.__client.on_disconnect = lambda client, userdata, msg: self.__on_disconnect(client, userdata, msg)
         self.__connected = False
         self.__started = False
         self.__topic = topic
