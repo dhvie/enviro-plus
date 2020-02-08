@@ -40,6 +40,7 @@ class EnviroMqtt:
 
     def start_async(self):
         if not self.__started:
+            print("starting")
             self.__started = True
             self.__client.connect(self.__broker, self.__port, 60)
             self.__client.loop_start()
