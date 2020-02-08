@@ -10,8 +10,10 @@ from .enviro import EnviroPlus
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
 
+
 def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
+
 
 class EnviroMqtt:
 
@@ -27,7 +29,7 @@ class EnviroMqtt:
         self.__broker = broker_address
         self.__port = broker_port
         self.__run_loop = None
-        self.__client.reconnect_delay_set(min_delay=1, max_delay=300)
+        # self.__client.reconnect_delay_set(min_delay=1, max_delay=300)
 
         if username is not None:
             self.__client.username_pw_set(username, password=pw)
@@ -41,7 +43,6 @@ class EnviroMqtt:
             self.__started = True
             self.__client.connect(self.__broker, self.__port, 60)
             self.__client.loop_start()
-            self.__loop()
 
     def __on_connect(self, client, userdata, rc):
         print("Connected with result code "+str(rc))
