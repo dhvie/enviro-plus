@@ -5,10 +5,6 @@ from multiprocessing import Process
 from .enviro import EnviroPlus
 
 
-def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-
-
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
@@ -19,8 +15,9 @@ class EnviroMqtt:
     def __init__(self, enviro: EnviroPlus, broker_address, broker_port, topic, username=None, pw=None):
         self.__enviro = enviro
         self.__client = mqtt.Client()
-        self.__client.on_connect = on_connect
+        self.__client.on_connect = self.__on_connect
         self.__client.on_message = on_message
+        self.__client.on_disconnect = self.__on_disconnect
         self.__connected = False
         self.__started = False
         self.__topic = topic
