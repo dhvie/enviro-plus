@@ -6,7 +6,7 @@ import ST7735
 import os
 import logging
 import colorsys
-from collections import deque
+from collections import deque, defaultdict
 import pandas as pd
 import math
 from multiprocessing import Process
@@ -236,6 +236,7 @@ class EnviroPlus:
             pms_data = self.__pms5003.read()
         except pmsReadTimeoutError:
             logging.warning('Failed to read PMS5003')
+            return defaultdict(int)
         return {
             'pm1': float(pms_data.pm_ug_per_m3(1.0)),
             'pm25': float(pms_data.pm_ug_per_m3(2.5)),
