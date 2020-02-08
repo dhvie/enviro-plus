@@ -251,23 +251,20 @@ class EnviroPlus:
         self.__lcd.display(img)
 
     def display_all(self):
-        try:
-            gas = self.gas
-            pms = self.particulates
-            self.__lcd.display_dict({
-                "temperature": self.temperature,
-                "pressure": self.pressure,
-                "humidity": self.humidity,
-                "oxidised": gas['oxidising'],
-                "reducing": gas['reducing'],
-                "nh3": gas['nh3'],
-                "pm1": pms['pm1'],
-                "pm25": pms['pm25'],
-                "pm10": pms['pm10'],
-                "light": self.lux
-            })
-        except Exception as e:
-            logging.error(e)
+        gas = self.gas
+        pms = self.particulates
+        self.__lcd.display_dict({
+            "temperature": self.temperature,
+            "pressure": self.pressure,
+            "humidity": self.humidity,
+            "oxidised": gas['oxidising'],
+            "reducing": gas['reducing'],
+            "nh3": gas['nh3'],
+            "pm1": pms['pm1'],
+            "pm25": pms['pm25'],
+            "pm10": pms['pm10'],
+            "light": self.lux
+        })
 
     def start(self):
         if self.__update_proc is not None:
