@@ -158,6 +158,7 @@ class EnviroLCD:
             y = y_offset + ((self.height / row_count) * (i % row_count))
             message = "{}: {:.1f} {}".format(name[:4], value, unit)
             limits = conditional_formatting.loc[name]
+            print(limits)
             max_level = ""
             for limit in limits.columns:
                 if value > limits[limit]:
