@@ -160,9 +160,9 @@ class EnviroLCD:
             limits = conditional_formatting.loc[name]
             print(limits)
             max_level = ""
-            for limit in limits.columns:
-                if value > limits[limit]:
-                    max_level = limit
+            for limit in limits.iteritems():
+                if value > limits[limit[1]]:
+                    max_level = limit[0]
 
             if max_level == "":
                 rgb = color_pallet['danger_low']
