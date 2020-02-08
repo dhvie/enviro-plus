@@ -29,7 +29,7 @@ class EnviroMqtt:
         self.__broker = broker_address
         self.__port = broker_port
         self.__run_loop = None
-        # self.__client.reconnect_delay_set(min_delay=1, max_delay=300)
+        self.__client.reconnect_delay_set(min_delay=1, max_delay=300)
 
         if username is not None:
             self.__client.username_pw_set(username, password=pw)
@@ -40,18 +40,17 @@ class EnviroMqtt:
 
     def start_async(self):
         if not self.__started:
-            print("starting")
             self.__started = True
             self.__client.connect(self.__broker, self.__port, 60)
             self.__client.loop_start()
+            self.__on_connect()
 
-    def __on_connect(self, client, userdata, rc):
-        print("Connected with result code "+str(rc))
+
+    def __on_connect(self):
         self.__connected = True
-        if rc == 0:
-            time.sleep(1)
-            self.__run_loop = Process(target=self.__loop)
-            self.__run_loop.start()
+        time.sleep(1)
+        self.__run_loop = Process(target=self.__loop)
+        self.__run_loop.start()
 
     def __on_disconnect(self, client, userdata, msg):
         self.__connected = False
