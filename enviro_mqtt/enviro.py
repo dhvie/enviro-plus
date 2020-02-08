@@ -153,10 +153,10 @@ class EnviroLCD:
         row_count = math.ceil(len(d) / column_count)
         i = 0
         for name, value in d.items():
-            unit = units.get(name)
-            x = x_offset + ((self.width / column_count) * (i / row_count))
+            unit = units.loc[name]
+            x = x_offset + ((self.width / column_count) * math.floor(i / row_count))
             y = y_offset + ((self.height / row_count) * (i % row_count))
-            message = "{}: {:.1f} {}".format(name[:4], value, unit)
+            message = "{}: {:.1f} {}".format(name[:4], value, unit.value)
             limits = conditional_formatting.loc[name]
             max_level = ""
             for limit in limits.iteritems():
