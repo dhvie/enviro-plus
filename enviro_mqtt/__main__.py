@@ -1,5 +1,6 @@
 import sys
 import argparse
+import time
 from .enviro import EnviroPlus
 from .mqtt import EnviroMqtt
 
@@ -21,7 +22,10 @@ try:
         mqtt.start_async()
 
     if args.run_mode == 'enviro' or args.run_mode == 'all':
-        enviro.start().join()
+        enviro.start()
+
+    while True:
+        time.sleep(0.5)
 
 # Exit cleanly
 except KeyboardInterrupt:
