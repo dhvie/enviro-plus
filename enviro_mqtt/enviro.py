@@ -258,7 +258,7 @@ class EnviroPlus:
             "pressure": self.pressure,
             "humidity": self.humidity,
             "oxidised": gas['oxidising'],
-            "reduced": gas['reduced'],
+            "reducing": gas['reducing'],
             "nh3": gas['nh3'],
             "pm1": pms['pm1'],
             "pm25": pms['pm25'],
