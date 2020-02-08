@@ -21,7 +21,7 @@ try:
         mqtt.start_async()
 
     if args.run_mode == 'enviro' or args.run_mode == 'all':
-        enviro.start()
+        enviro.start().join()
 
 # Exit cleanly
 except KeyboardInterrupt:

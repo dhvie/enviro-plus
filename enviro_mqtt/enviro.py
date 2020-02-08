@@ -269,6 +269,7 @@ class EnviroPlus:
     def start(self):
         if self.__update_proc is not None:
             self.__update_proc = Process(target=self.display_all)
+        return self.__update_proc
 
     def stop(self):
         if self.__update_proc is not None:
