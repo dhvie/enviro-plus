@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name='environ_hass',
+    name='environ_mqtt',
     version='0.1',
-    packages=['enviro_hass'],
+    packages=['environ_mqtt'],
     url='',
     license='MIT',
     author='dh_vie',
-    author_email='',
+    author_email='dhvie85@gmail.com',
     description='',
     install_requires=[
         "ST7735",
