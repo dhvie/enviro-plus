@@ -59,8 +59,8 @@ class EnviroMqtt:
             mqtt_res['pressure'] = self.__enviro.pressure
             mqtt_res['humidity'] = self.__enviro.humidity
             gas = self.__enviro.gas
-            mqtt_res['gas_ox'] = gas['oxidising']
-            mqtt_res['gas_reg'] = gas['reducing']
+            mqtt_res['gas_oxidising'] = gas['oxidising']
+            mqtt_res['gas_reducing'] = gas['reducing']
             mqtt_res['gas_nh3'] = gas['nh3']
 
             particulates = self.__enviro.particulates
