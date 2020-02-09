@@ -14,7 +14,6 @@ setup(
         "ltr559",
         "pimoroni-bme280",
         "pms5003",
-        "PIL",
         "paho-mqtt",
         "sounddevice"
     ]
