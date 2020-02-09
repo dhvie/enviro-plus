@@ -55,13 +55,13 @@ class EnviroMqtt:
     def __loop(self):
         while True:
             mqtt_res = dict()
-            mqtt_res['temp'] = "{.2f}".format(self.__enviro.temperature)
-            mqtt_res['pressure'] = "{.2f}".format(self.__enviro.pressure)
-            mqtt_res['humidity'] = "{.2f}".format(self.__enviro.humidity)
+            mqtt_res['temp'] = "{:.2f}".format(self.__enviro.temperature)
+            mqtt_res['pressure'] = "{:.2f}".format(self.__enviro.pressure)
+            mqtt_res['humidity'] = "{:.2f}".format(self.__enviro.humidity)
             gas = self.__enviro.gas
-            mqtt_res['gas_ox'] = "{.2f}".format(gas['oxidising'])
-            mqtt_res['gas_reg'] = "{.2f}".format(gas['reducing'])
-            mqtt_res['gas_nh3'] = "{.2f}".format(gas['nh3'])
+            mqtt_res['gas_ox'] = "{:.2f}".format(gas['oxidising'])
+            mqtt_res['gas_reg'] = "{:.2f}".format(gas['reducing'])
+            mqtt_res['gas_nh3'] = "{:.2f}".format(gas['nh3'])
 
             particulates = self.__enviro.particulates
             mqtt_res['pm1'] = particulates['pm1']
