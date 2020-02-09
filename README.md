@@ -1,6 +1,6 @@
 # Pimoroni Enviro+ MQTT
 
-##Installation
+## Installation
 1. Follow the installation instructions on https://github.com/pimoroni/enviroplus-python as this will install packages we depend on
 2. Install numpy and pandas - depending on your platform you can do this with either with pip or otherwise use:
     ```shell script
@@ -13,7 +13,7 @@
     ```
     All dependencies should be found, if not they should be simple to install via `pip3 install`
     
-##Usage
+## Usage
 You can simply run the package using `python3 -m enviro_mqtt <enviro|mqtt|all>`
 The argument tells enviro if you want to just display the sensor measurments on screen (`enviro`) or just send via
 mqtt and keep the screen blank (`mqtt`) or you want to do both (`all`)
@@ -32,15 +32,15 @@ if all the details are correct and your user has write access to the topic you s
 The data has the form:
 ```json
 {
-  'temp': <float>,
-  'pressure': <float>,
-  'humidity': <float>,
-  'gas_oxidising': <float>,
-  'gas_reducing': <float>,
-  'gas_nh3':<float>,
-  'pm1': <int>,
-  'pm25': <int>,
-  'pm10': <int>
+  'temp': float,
+  'pressure': float,
+  'humidity': float,
+  'gas_oxidising': float,
+  'gas_reducing': float,
+  'gas_nh3':float,
+  'pm1': int,
+  'pm25': int,
+  'pm10': int
 }
 ```
 
