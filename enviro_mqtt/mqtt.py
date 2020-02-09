@@ -17,7 +17,7 @@ def on_connect(client, userdata, rc):
 
 class EnviroMqtt:
 
-    def __init__(self, enviro: EnviroPlus, broker_address, broker_port, topic, username=None, pw=None):
+    def __init__(self, enviro: EnviroPlus, broker_address, broker_port, topic, username=None, pw=None, refresh_freq_secs=5):
         self.__enviro = enviro
         self.__client = mqtt.Client()
         self.__client.on_connect = on_connect
@@ -28,6 +28,7 @@ class EnviroMqtt:
         self.__port = broker_port
         self.__run_loop = None
         self.__client.reconnect_delay_set(min_delay=1, max_delay=300)
+        self.__refresh_freq = refresh_freq_secs
 
         if username is not None:
             self.__client.username_pw_set(username, password=pw)
@@ -35,6 +36,14 @@ class EnviroMqtt:
     @property
     def enviro(self):
         return self.__enviro
+
+    @property
+    def refresh_freq_secs(self):
+        return self.__refresh_freq
+
+    @refresh_freq_secs.setter
+    def refresh_freq_secs(self, new_value):
+        self.__refresh_freq = new_value
 
     def start_blocking(self):
         if not self.__started:
@@ -68,3 +77,4 @@ class EnviroMqtt:
             mqtt_res['pm25'] = particulates['pm25']
             mqtt_res['pm10'] = particulates['pm10']
             self.__client.publish(self.__topic, payload=json.dumps(mqtt_res))
+            time.sleep(self.__refresh_freq)
