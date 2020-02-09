@@ -17,12 +17,12 @@ args = parser.parse_args()
 
 try:
     enviro = EnviroPlus()
-    if args.run_mode == 'mqtt' or args.run_mode == 'all':
-        mqtt = EnviroMqtt(enviro, args.address, args.port, args.topic, username=args.user, pw=args.pw)
-        mqtt.start_async()
-
     if args.run_mode == 'enviro' or args.run_mode == 'all':
         enviro.start()
+
+    if args.run_mode == 'mqtt' or args.run_mode == 'all':
+        mqtt = EnviroMqtt(enviro, args.address, args.port, args.topic, username=args.user, pw=args.pw)
+        mqtt.start_blocking()
 
     while True:
         time.sleep(0.5)

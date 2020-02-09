@@ -22,8 +22,6 @@ class EnviroMqtt:
         self.__client = mqtt.Client()
         self.__client.on_connect = on_connect
         self.__client.on_message = on_message
-        # self.__client.on_disconnect = lambda client, userdata, msg: self.__on_disconnect(client, userdata, msg)
-        self.__connected = False
         self.__started = False
         self.__topic = topic
         self.__broker = broker_address
@@ -38,24 +36,12 @@ class EnviroMqtt:
     def enviro(self):
         return self.__enviro
 
-    def start_async(self):
+    def start_blocking(self):
         if not self.__started:
             self.__started = True
             self.__client.connect(self.__broker, self.__port, 60)
             self.__client.loop_start()
-            self.__on_connect()
-
-
-    def __on_connect(self):
-        self.__connected = True
-        time.sleep(1)
-        self.__run_loop = Process(target=self.__loop)
-        self.__run_loop.start()
-
-    def __on_disconnect(self, client, userdata, msg):
-        self.__connected = False
-        self.__started = False
-        self.__run_loop.terminate()
+            self.__loop()
 
     def stop(self):
         if self.__started:
