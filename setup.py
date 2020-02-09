@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='environ_mqtt',
+    name='enviro_mqtt',
     version='0.1',
-    packages=['environ_mqtt'],
+    packages=['enviro_mqtt'],
     url='',
     license='MIT',
     author='dh_vie',
