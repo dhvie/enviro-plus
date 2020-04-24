@@ -1,5 +1,5 @@
 from bme280 import BME280
-from pms5003 import PMS5003, ReadTimeoutError as pmsReadTimeoutError
+from pms5003 import PMS5003, SerialTimeoutError, ChecksumMismatchError, ReadTimeoutError
 from enviroplus import gas
 from subprocess import PIPE, Popen
 import ST7735
@@ -234,8 +234,9 @@ class EnviroPlus:
     def particulates(self):
         try:
             pms_data = self.__pms5003.read()
-        except pmsReadTimeoutError:
+        except (ReadTimeoutError, ChecksumMismatchError, SerialTimeoutError):
             logging.warning('Failed to read PMS5003')
+            self.__pms5003.reset()
             return defaultdict(int)
         return {
             'pm1': float(pms_data.pm_ug_per_m3(1.0)),
