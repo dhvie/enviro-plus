@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='enviro_mqtt',
-    version='0.1.8',
+    version='0.1.9',
     packages=['enviro_mqtt'],
     package_data={
         "enviro_mqtt": ['fonts/**/*']
