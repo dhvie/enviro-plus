@@ -62,6 +62,7 @@ class EnviroMqtt:
                 self.__started = False
 
     def __loop(self):
+        skip_count = 3
         while True:
             mqtt_res = dict()
             mqtt_res['temp'] = self.__enviro.temperature
@@ -76,5 +77,8 @@ class EnviroMqtt:
             mqtt_res['pm1'] = particulates['pm1']
             mqtt_res['pm25'] = particulates['pm25']
             mqtt_res['pm10'] = particulates['pm10']
-            self.__client.publish(self.__topic, payload=json.dumps(mqtt_res))
+            if skip_count == 0:
+                self.__client.publish(self.__topic, payload=json.dumps(mqtt_res))
+            else:
+                skip_count = skip_count - 1
             time.sleep(self.__refresh_freq)
