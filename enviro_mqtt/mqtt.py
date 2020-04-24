@@ -62,7 +62,7 @@ class EnviroMqtt:
                 self.__started = False
 
     def __loop(self):
-        skip_count = 3
+        skip_count = 10
         while True:
             mqtt_res = dict()
             mqtt_res['temp'] = self.__enviro.temperature
