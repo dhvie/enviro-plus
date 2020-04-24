@@ -211,7 +211,7 @@ class EnviroPlus:
         avg_cpu_temp = sum(self.__cpu_temp_history) / float(len(self.__cpu_temp_history))
         self.__cpu_temp_history.popleft()
         temp_reading = self.__bme280.get_temperature()
-        return temp_reading - (avg_cpu_temp - temp_reading) / 2.8
+        return temp_reading - (avg_cpu_temp - temp_reading) / 1.8
 
     @property
     def pressure(self):
