@@ -9,7 +9,7 @@ import colorsys
 from collections import deque, defaultdict
 import pandas as pd
 import math
-from multiprocessing import Process
+from multiprocessing import Process, Lock
 
 try:
     # Transitional fix for breaking change in LTR559
@@ -185,6 +185,8 @@ class EnviroLCD:
 
 class EnviroPlus:
 
+    read_lock = Lock()
+
     def __init__(self):
         # BME280 temperature/pressure/humidity sensor
         self.__bme280 = BME280()
@@ -233,16 +235,19 @@ class EnviroPlus:
     @property
     def particulates(self):
         try:
+            EnviroPlus.read_lock.acquire()
             pms_data = self.__pms5003.read()
+            return {
+                'pm1': float(pms_data.pm_ug_per_m3(1.0)),
+                'pm25': float(pms_data.pm_ug_per_m3(2.5)),
+                'pm10': float(pms_data.pm_ug_per_m3(10))
+            }
         except (ReadTimeoutError, ChecksumMismatchError, SerialTimeoutError):
             logging.warning('Failed to read PMS5003')
             self.__pms5003.reset()
             return defaultdict(int)
-        return {
-            'pm1': float(pms_data.pm_ug_per_m3(1.0)),
-            'pm25': float(pms_data.pm_ug_per_m3(2.5)),
-            'pm10': float(pms_data.pm_ug_per_m3(10))
-        }
+        finally:
+            EnviroPlus.read_lock.release()
 
     @property
     def lux(self):
